@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Command.DriveCommand;
 import frc.robot.Command.IntakeCommand;
 import frc.robot.Command.ShooterCommand;
+import frc.robot.autonomo.Auto;
 import frc.robot.subsystem.ConvenioSubsystem;
 import frc.robot.subsystem.DriveSubsystem;
 import frc.robot.subsystem.ShooterSubsystem;
@@ -17,8 +19,12 @@ import frc.robot.subsystem.ShooterSubsystem;
 
 public class RobotContainer {
 
-  
+      private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+
       CommandXboxController controle = new CommandXboxController(0);
+
+
+      //subsystems
      private ShooterSubsystem shooterSubsystem = new ShooterSubsystem() ; 
      private ConvenioSubsystem convenioSubsystem = new ConvenioSubsystem(); 
      private DriveSubsystem driveSubsystem = new DriveSubsystem();
@@ -26,6 +32,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
+    autoChooser.setDefaultOption("vai teia", new Auto(shooterSubsystem, convenioSubsystem));
 
   }
  
@@ -38,6 +45,6 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return autoChooser.getSelected();
   }
 }
