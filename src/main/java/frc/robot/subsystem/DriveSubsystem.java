@@ -68,17 +68,12 @@ public class DriveSubsystem extends SubsystemBase {
             drive.tankDrive(left_trigger, right_trigger);
 
         } else if (Math.abs(right_axis) > tolerancia || Math.abs(left_axis) > tolerancia) {
-            drive.tankDrive(left_axis, right_axis);
+            drive.tankDrive(left_axis * 0.4, right_axis * 0.4);
 
         } else { 
             drive.tankDrive(0, 0);
         }
   }
-
-    public void andar_reto () {
-        m_left_leader.setVoltage(7);
-        m_right_leader.setVoltage(7);
-    }
   
     public void parar_drive() {
         drive.tankDrive(0, 0);
